@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Model | Enterprise Data Architecture</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <nav id="navbar">
+        <div class="container nav-content">
+            <a href="#" class="logo">
+                <div class="logo-box">D</div>
+                <span>Document<span class="premium-gradient-text">Model</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#architecture">Architecture</a>
+                <a href="#dev">Developer</a>
+            </div>
+            <a href="#dev" class="btn btn-primary" style="padding: 0.5rem 1.2rem; font-size: 0.8rem;">Get Started</a>
+        </div>
+    </nav>
+
+    <section class="hero container">
+        <div class="hero-badge">PostgreSQL 15+ Architecture</div>
+        <h1>The Foundation for<br><span class="premium-gradient-text">Enterprise Document Systems</span></h1>
+        <p>A high-performance, multi-tenant data model designed for absolute version integrity, granular permissions, and immutable audit trails.</p>
+        <div class="cta-group">
+            <a href="#architecture" class="btn btn-primary">View Data Model</a>
+            <a href="#features" class="btn btn-secondary">Explore Features</a>
+        </div>
+    </section>
+
+    <section id="features" class="section-padding container">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Built for <span class="premium-gradient-text">Scale & Safety</span></h2>
+            <p style="color: var(--text-muted);">Everything you need for a professional-grade document backend.</p>
+        </div>
+
+        <div class="features-grid">
+            <!-- Card 1 -->
+            <div class="feature-card">
+                <div class="icon-wrapper">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3>Immutable Versioning</h3>
+                <p>Append-only history ensures that every change is preserved. No updates, no deletions, just a perfect trail of evolution.</p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="feature-card">
+                <div class="icon-wrapper">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+                </div>
+                <h3>Workspace Isolation</h3>
+                <p>Native multi-tenancy via opaque workspace partitioning. Secure, scalable, and optimized for cloud-native deployments.</p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="feature-card">
+                <div class="icon-wrapper">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                </div>
+                <h3>Role-Based Access</h3>
+                <p>Granular permission model (Viewer, Editor, Admin) enforced at the database level for uncompromising security.</p>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="feature-card">
+                <div class="icon-wrapper">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
+                </div>
+                <h3>Threaded Discussions</h3>
+                <p>Self-referential comment structures allowing deep, threaded conversations directly tied to document versions.</p>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="feature-card">
+                <div class="icon-wrapper">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                </div>
+                <h3>Compliance Audit Log</h3>
+                <p>An append-only event store that records every mutation. JSONB payloads keep your audit trail rich and searchable.</p>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="feature-card">
+                <div class="icon-wrapper">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+                </div>
+                <h3>Smart Tagging</h3>
+                <p>Workspace-scoped labels with many-to-many relationships for powerful document organization and filtering.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="architecture" class="section-padding container">
+        <div class="arch-container">
+            <div>
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">The <span class="premium-gradient-text">Architecture</span></h2>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">A lean, relational design optimized for PostgreSQL. Every table is strategically indexed to handle millions of records without latency.</p>
+
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="entity-node">
+                        <span class="node-label">documents</span>
+                        <span class="node-type">Core Entity</span>
+                    </div>
+                    <div class="entity-node">
+                        <span class="node-label">document_versions</span>
+                        <span class="node-type">Immutable Log</span>
+                    </div>
+                    <div class="entity-node">
+                        <span class="node-label">permissions</span>
+                        <span class="node-type">ACL</span>
+                    </div>
+                    <div class="entity-node">
+                        <span class="node-label">audit_log</span>
+                        <span class="node-type">JSONB Store</span>
+                    </div>
+                </div>
+            </div>
+            <div class="arch-visual">
+                <!-- Abstract SVG representation of a database -->
+                <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <!-- Database Cylinders -->
+                    <rect x="100" y="100" width="200" height="60" rx="30" fill="url(#grad1)" opacity="0.8" />
+                    <rect x="100" y="170" width="200" height="60" rx="10" fill="url(#grad1)" opacity="0.6" />
+                    <rect x="100" y="240" width="200" height="60" rx="10" fill="url(#grad1)" opacity="0.4" />
+                    <ellipse cx="200" cy="100" rx="100" ry="30" fill="url(#grad1)" />
+
+                    <!-- Connecting lines -->
+                    <path d="M200 160 L200 170" stroke="white" stroke-width="2" stroke-dasharray="4" />
+                    <path d="M200 230 L200 240" stroke="white" stroke-width="2" stroke-dasharray="4" />
+
+                    <!-- Orbiting particles -->
+                    <circle cx="320" cy="150" r="5" fill="#06b6d4">
+                        <animate attributeName="cy" values="150;180;150" dur="3s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="80" cy="220" r="5" fill="#8b5cf6">
+                        <animate attributeName="cy" values="220;190;220" dur="4s" repeatCount="indefinite" />
+                    </circle>
+                </svg>
+                <div style="text-align: center; margin-top: 2rem;" class="mono" style="font-size: 0.7rem; color: var(--text-muted);">
+                    RELATIONAL ENGINE VISUALIZER v1.0
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="dev" class="section-padding container">
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Developer <span class="premium-gradient-text">Experience</span></h2>
+            <p style="color: var(--text-muted);">Clean queries. Strict constraints. Zero ambiguity.</p>
+        </div>
+
+        <div class="code-window">
+            <div class="window-header">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+                <span class="mono" style="margin-left: 10px; font-size: 0.75rem; color: var(--text-muted);">query_latest_version.sql</span>
+            </div>
+            <div class="code-content">
+                <pre><code><span class="hl-keyword">SELECT</span> d.id, d.slug, d.title, dv.body
+<span class="hl-keyword">FROM</span> documents d
+<span class="hl-keyword">JOIN</span> document_versions dv
+  <span class="hl-keyword">ON</span> dv.document_id = d.id
+  <span class="hl-keyword">AND</span> dv.version = (
+      <span class="hl-keyword">SELECT MAX</span>(dv2.version)
+      <span class="hl-keyword">FROM</span> document_versions dv2
+      <span class="hl-keyword">WHERE</span> dv2.document_id = d.id
+  )
+<span class="hl-keyword">WHERE</span> d.slug = <span class="hl-var">$1</span>
+  <span class="hl-keyword">AND</span> d.workspace_id = <span class="hl-var">$2</span>;</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <a href="#" class="footer-logo">
+                <div class="logo-box">D</div>
+                <span>Document<span class="premium-gradient-text">Model</span></span>
+            </a>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">© 2026 Document Model Architecture. Engineered for PostgreSQL.</p>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

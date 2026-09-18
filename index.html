@@ -1,214 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document Model | Enterprise Data Architecture</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A visual overview of the Document Model PostgreSQL data architecture, relationships, constraints, queries, and scaling decisions.">
+  <title>Document Model — Data Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="grid-overlay"></div>
 
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-
-    <nav id="navbar">
-        <div class="container nav-content">
-            <a href="#" class="logo">
-                <div class="logo-box">D</div>
-                <span>Document<span class="premium-gradient-text">Model</span></span>
-            </a>
-            <div class="nav-links">
-                <a href="#features">Features</a>
-                <a href="#architecture">Architecture</a>
-                <a href="#dev">Developer</a>
-            </div>
-            <a href="#dev" class="btn btn-primary" style="padding: 0.5rem 1.2rem; font-size: 0.8rem;">Get Started</a>
-        </div>
+  <header class="site-header" id="top">
+    <nav class="nav container" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="Document Model home">
+        <span class="brand-mark">DM</span>
+        <span>document<span class="brand-accent">-model</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#constraints">Constraints</a>
+        <a href="#queries">Queries</a>
+      </div>
+      <a class="nav-repo" href="https://github.com/techtuber9988/document-model" target="_blank" rel="noreferrer">
+        GitHub <span aria-hidden="true">↗</span>
+      </a>
     </nav>
+  </header>
 
-    <section class="hero container">
-        <div class="hero-badge">PostgreSQL 15+ Architecture</div>
-        <h1>The Foundation for<br><span class="premium-gradient-text">Enterprise Document Systems</span></h1>
-        <p>A high-performance, multi-tenant data model designed for absolute version integrity, granular permissions, and immutable audit trails.</p>
-        <div class="cta-group">
-            <a href="#architecture" class="btn btn-primary">View Data Model</a>
-            <a href="#features" class="btn btn-secondary">Explore Features</a>
+  <main>
+    <section class="hero container" id="overview">
+      <div class="eyebrow"><span class="status-dot"></span> PostgreSQL 15+ · Relational data architecture</div>
+      <div class="hero-layout">
+        <div class="hero-copy">
+          <p class="kicker">A schema designed for systems that remember</p>
+          <h1>Understand the data model behind a <span>document platform.</span></h1>
+          <p class="hero-description">
+            A multi-tenant PostgreSQL foundation for documents, immutable version history,
+            workspace-scoped tags, threaded comments, document permissions, and durable audit events.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#architecture">Explore architecture <span>↓</span></a>
+            <a class="button button-ghost" href="DATA_MODEL.md" target="_blank">Read DATA_MODEL.md <span>↗</span></a>
+          </div>
+          <div class="hero-meta">
+            <span><b>8</b> core tables</span>
+            <span><b>UUID</b> primary keys</span>
+            <span><b>Insert-only</b> versions</span>
+          </div>
         </div>
+        <div class="hero-card">
+          <div class="card-topline">
+            <span class="mono">schema.graph</span>
+            <span class="live-label"><i></i> structured</span>
+          </div>
+          <div class="schema-preview">
+            <div class="schema-node schema-main">
+              <span class="node-icon">▦</span>
+              <div><strong>documents</strong><small>core entity</small></div>
+              <em>01</em>
+            </div>
+            <div class="schema-connector"><span></span></div>
+            <div class="schema-row">
+              <div class="schema-node">
+                <span class="node-icon violet">↻</span>
+                <div><strong>document_versions</strong><small>immutable history</small></div>
+              </div>
+              <div class="schema-node">
+                <span class="node-icon cyan">⌁</span>
+                <div><strong>permissions</strong><small>document ACL</small></div>
+              </div>
+            </div>
+            <div class="schema-row">
+              <div class="schema-node">
+                <span class="node-icon orange">#</span>
+                <div><strong>tags</strong><small>workspace labels</small></div>
+              </div>
+              <div class="schema-node">
+                <span class="node-icon green">◌</span>
+                <div><strong>audit_log</strong><small>append-only events</small></div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer mono">workspace_id → tenant boundary</div>
+        </div>
+      </div>
     </section>
 
-    <section id="features" class="section-padding container">
-        <div style="text-align: center; margin-bottom: 4rem;">
-            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Built for <span class="premium-gradient-text">Scale & Safety</span></h2>
-            <p style="color: var(--text-muted);">Everything you need for a professional-grade document backend.</p>
+    <section class="section container" id="architecture">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">01 / Architecture</p>
+          <h2>The system at a glance</h2>
         </div>
+        <p>Every table has a focused responsibility. Foreign keys preserve relationships while workspace identifiers keep tenant data partitioned.</p>
+      </div>
 
-        <div class="features-grid">
-            <!-- Card 1 -->
-            <div class="feature-card">
-                <div class="icon-wrapper">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
-                <h3>Immutable Versioning</h3>
-                <p>Append-only history ensures that every change is preserved. No updates, no deletions, just a perfect trail of evolution.</p>
+      <div class="architecture-grid">
+        <article class="panel relationship-panel">
+          <div class="panel-heading">
+            <div><span class="panel-icon">⌘</span><h3>Entity map</h3></div>
+            <span class="tag">8 tables</span>
+          </div>
+          <div class="entity-map">
+            <div class="map-center">
+              <span class="map-symbol">▦</span>
+              <strong>documents</strong>
+              <small>Core record</small>
             </div>
+            <div class="map-pill pill-users"><b>users</b><span>identity</span></div>
+            <div class="map-pill pill-versions"><b>document_versions</b><span>history</span></div>
+            <div class="map-pill pill-tags"><b>tags</b><span>labels</span></div>
+            <div class="map-pill pill-comments"><b>comments</b><span>threads</span></div>
+            <div class="map-pill pill-permissions"><b>permissions</b><span>access</span></div>
+            <div class="map-pill pill-audit"><b>audit_log</b><span>events</span></div>
+            <div class="map-pill pill-join"><b>document_tags</b><span>join table</span></div>
+            <div class="map-lines" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <p class="panel-note">The document is the central entity. Versions, comments, permissions, tags, and audit events connect around it.</p>
+        </article>
 
-            <!-- Card 2 -->
-            <div class="feature-card">
-                <div class="icon-wrapper">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
-                </div>
-                <h3>Workspace Isolation</h3>
-                <p>Native multi-tenancy via opaque workspace partitioning. Secure, scalable, and optimized for cloud-native deployments.</p>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="feature-card">
-                <div class="icon-wrapper">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                </div>
-                <h3>Role-Based Access</h3>
-                <p>Granular permission model (Viewer, Editor, Admin) enforced at the database level for uncompromising security.</p>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="feature-card">
-                <div class="icon-wrapper">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
-                </div>
-                <h3>Threaded Discussions</h3>
-                <p>Self-referential comment structures allowing deep, threaded conversations directly tied to document versions.</p>
-            </div>
-
-            <!-- Card 5 -->
-            <div class="feature-card">
-                <div class="icon-wrapper">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                </div>
-                <h3>Compliance Audit Log</h3>
-                <p>An append-only event store that records every mutation. JSONB payloads keep your audit trail rich and searchable.</p>
-            </div>
-
-            <!-- Card 6 -->
-            <div class="feature-card">
-                <div class="icon-wrapper">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
-                </div>
-                <h3>Smart Tagging</h3>
-                <p>Workspace-scoped labels with many-to-many relationships for powerful document organization and filtering.</p>
-            </div>
-        </div>
+        <article class="panel table-panel">
+          <div class="panel-heading">
+            <div><span class="panel-icon">▤</span><h3>Table responsibilities</h3></div>
+            <span class="tag">reference</span>
+          </div>
+          <div class="table-list">
+            <div class="table-item"><span class="table-number">01</span><div><strong>users</strong><p>Login identities and display names.</p></div><span class="mini-type">identity</span></div>
+            <div class="table-item"><span class="table-number">02</span><div><strong>documents</strong><p>Workspace-scoped document records and workflow status.</p></div><span class="mini-type">core</span></div>
+            <div class="table-item"><span class="table-number">03</span><div><strong>document_versions</strong><p>Immutable snapshots created on every save.</p></div><span class="mini-type">history</span></div>
+            <div class="table-item"><span class="table-number">04</span><div><strong>tags / document_tags</strong><p>Flat labels and their many-to-many association.</p></div><span class="mini-type">taxonomy</span></div>
+            <div class="table-item"><span class="table-number">05</span><div><strong>comments</strong><p>Threaded discussions with self-referencing replies.</p></div><span class="mini-type">collab</span></div>
+            <div class="table-item"><span class="table-number">06</span><div><strong>permissions</strong><p>One viewer, editor, or admin role per user/document pair.</p></div><span class="mini-type">acl</span></div>
+            <div class="table-item"><span class="table-number">07</span><div><strong>audit_log</strong><p>Append-only record of meaningful mutations.</p></div><span class="mini-type">audit</span></div>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <section id="architecture" class="section-padding container">
-        <div class="arch-container">
-            <div>
-                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">The <span class="premium-gradient-text">Architecture</span></h2>
-                <p style="color: var(--text-muted); margin-bottom: 2rem;">A lean, relational design optimized for PostgreSQL. Every table is strategically indexed to handle millions of records without latency.</p>
-
-                <div style="display: flex; flex-direction: column; gap: 1rem;">
-                    <div class="entity-node">
-                        <span class="node-label">documents</span>
-                        <span class="node-type">Core Entity</span>
-                    </div>
-                    <div class="entity-node">
-                        <span class="node-label">document_versions</span>
-                        <span class="node-type">Immutable Log</span>
-                    </div>
-                    <div class="entity-node">
-                        <span class="node-label">permissions</span>
-                        <span class="node-type">ACL</span>
-                    </div>
-                    <div class="entity-node">
-                        <span class="node-label">audit_log</span>
-                        <span class="node-type">JSONB Store</span>
-                    </div>
-                </div>
-            </div>
-            <div class="arch-visual">
-                <!-- Abstract SVG representation of a database -->
-                <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
-                    <defs>
-                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <!-- Database Cylinders -->
-                    <rect x="100" y="100" width="200" height="60" rx="30" fill="url(#grad1)" opacity="0.8" />
-                    <rect x="100" y="170" width="200" height="60" rx="10" fill="url(#grad1)" opacity="0.6" />
-                    <rect x="100" y="240" width="200" height="60" rx="10" fill="url(#grad1)" opacity="0.4" />
-                    <ellipse cx="200" cy="100" rx="100" ry="30" fill="url(#grad1)" />
-
-                    <!-- Connecting lines -->
-                    <path d="M200 160 L200 170" stroke="white" stroke-width="2" stroke-dasharray="4" />
-                    <path d="M200 230 L200 240" stroke="white" stroke-width="2" stroke-dasharray="4" />
-
-                    <!-- Orbiting particles -->
-                    <circle cx="320" cy="150" r="5" fill="#06b6d4">
-                        <animate attributeName="cy" values="150;180;150" dur="3s" repeatCount="indefinite" />
-                    </circle>
-                    <circle cx="80" cy="220" r="5" fill="#8b5cf6">
-                        <animate attributeName="cy" values="220;190;220" dur="4s" repeatCount="indefinite" />
-                    </circle>
-                </svg>
-                <div style="text-align: center; margin-top: 2rem;" class="mono" style="font-size: 0.7rem; color: var(--text-muted);">
-                    RELATIONAL ENGINE VISUALIZER v1.0
-                </div>
-            </div>
+    <section class="section container" id="features">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">02 / Design principles</p>
+          <h2>Built around durable rules</h2>
         </div>
+        <p>The schema places important integrity guarantees in PostgreSQL instead of relying only on application code.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card"><span class="feature-icon violet">↻</span><h3>Immutable versioning</h3><p>Each save inserts a new version. Historical rows are never updated or deleted during normal operation.</p><span class="feature-caption">document_versions</span></article>
+        <article class="feature-card"><span class="feature-icon cyan">⌂</span><h3>Tenant isolation</h3><p>workspace_id partitions documents and tags by tenant without pretending the external workspace service is local.</p><span class="feature-caption">workspace_id</span></article>
+        <article class="feature-card"><span class="feature-icon orange">◈</span><h3>Granular permissions</h3><p>Document-level access is explicit: viewer, editor, or admin, with one role per user/document pair.</p><span class="feature-caption">permissions</span></article>
+        <article class="feature-card"><span class="feature-icon green">⌁</span><h3>Traceable activity</h3><p>Audit events preserve meaningful actions and JSONB payloads, even when related records are removed.</p><span class="feature-caption">audit_log</span></article>
+      </div>
     </section>
 
-    <section id="dev" class="section-padding container">
-        <div style="text-align: center; margin-bottom: 4rem;">
-            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Developer <span class="premium-gradient-text">Experience</span></h2>
-            <p style="color: var(--text-muted);">Clean queries. Strict constraints. Zero ambiguity.</p>
+    <section class="section container" id="constraints">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">03 / Integrity layer</p>
+          <h2>Constraints that protect the contract</h2>
         </div>
-
-        <div class="code-window">
-            <div class="window-header">
-                <div class="dot dot-red"></div>
-                <div class="dot dot-yellow"></div>
-                <div class="dot dot-green"></div>
-                <span class="mono" style="margin-left: 10px; font-size: 0.75rem; color: var(--text-muted);">query_latest_version.sql</span>
-            </div>
-            <div class="code-content">
-                <pre><code><span class="hl-keyword">SELECT</span> d.id, d.slug, d.title, dv.body
-<span class="hl-keyword">FROM</span> documents d
-<span class="hl-keyword">JOIN</span> document_versions dv
-  <span class="hl-keyword">ON</span> dv.document_id = d.id
-  <span class="hl-keyword">AND</span> dv.version = (
-      <span class="hl-keyword">SELECT MAX</span>(dv2.version)
-      <span class="hl-keyword">FROM</span> document_versions dv2
-      <span class="hl-keyword">WHERE</span> dv2.document_id = d.id
-  )
-<span class="hl-keyword">WHERE</span> d.slug = <span class="hl-var">$1</span>
-  <span class="hl-keyword">AND</span> d.workspace_id = <span class="hl-var">$2</span>;</code></pre>
-            </div>
-        </div>
+        <p>These are the rules that stop invalid states before they become production data problems.</p>
+      </div>
+      <div class="constraint-grid">
+        <article class="constraint-card">
+          <div class="constraint-head"><span class="constraint-badge">PK</span><h3>Primary keys</h3></div>
+          <p>UUIDs identify core records. The document_tags join table uses a composite key because the relationship itself has no independent identity.</p>
+          <div class="code-chip">id UUID PRIMARY KEY</div>
+        </article>
+        <article class="constraint-card">
+          <div class="constraint-head"><span class="constraint-badge">UQ</span><h3>Unique constraints</h3></div>
+          <p>Prevent duplicate emails, workspace slugs, version numbers, tag names, and permission grants.</p>
+          <div class="code-chip">(workspace_id, slug)</div>
+        </article>
+        <article class="constraint-card">
+          <div class="constraint-head"><span class="constraint-badge">FK</span><h3>Foreign keys</h3></div>
+          <p>Delete behavior is intentional: cascade dependent records, restrict destructive ownership changes, and preserve audit history with SET NULL.</p>
+          <div class="code-chip">ON DELETE CASCADE</div>
+        </article>
+        <article class="constraint-card">
+          <div class="constraint-head"><span class="constraint-badge">CK</span><h3>Check constraints</h3></div>
+          <p>Status, role, action, and version values are limited to valid domain values.</p>
+          <div class="code-chip">status IN (...)</div>
+        </article>
+      </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <a href="#" class="footer-logo">
-                <div class="logo-box">D</div>
-                <span>Document<span class="premium-gradient-text">Model</span></span>
-            </a>
-            <p style="color: var(--text-muted); font-size: 0.85rem;">© 2026 Document Model Architecture. Engineered for PostgreSQL.</p>
+    <section class="section container" id="queries">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">04 / Query layer</p>
+          <h2>Queries that carry the load</h2>
         </div>
-    </footer>
+        <p>The data model is designed around common reads: opening a document, listing workspace documents, and searching document content.</p>
+      </div>
+      <div class="query-layout">
+        <article class="panel query-panel">
+          <div class="panel-heading">
+            <div><span class="panel-icon">⌘</span><h3>Load the latest document version</h3></div>
+            <span class="tag accent-tag">Query 01</span>
+          </div>
+          <p class="query-intro">The most frequent read joins the document to its latest immutable version and owner.</p>
+          <div class="code-window">
+            <div class="code-bar"><span><i></i><i></i><i></i></span><span class="mono">latest_version.sql</span><span class="mono">PostgreSQL</span></div>
+            <pre><code><span class="sql-keyword">SELECT</span>
+  d.id,
+  d.slug,
+  d.title,
+  d.status,
+  dv.version,
+  dv.body,
+  u.display_name <span class="sql-keyword">AS</span> owner_name
+<span class="sql-keyword">FROM</span> documents d
+<span class="sql-keyword">JOIN</span> document_versions dv
+  <span class="sql-keyword">ON</span> dv.document_id = d.id
+ <span class="sql-keyword">AND</span> dv.version = (
+   <span class="sql-keyword">SELECT MAX</span>(dv2.version)
+   <span class="sql-keyword">FROM</span> document_versions dv2
+   <span class="sql-keyword">WHERE</span> dv2.document_id = d.id
+ )
+<span class="sql-keyword">JOIN</span> users u <span class="sql-keyword">ON</span> u.id = d.owner_id
+<span class="sql-keyword">WHERE</span> d.slug = <span class="sql-var">$1</span>
+  <span class="sql-keyword">AND</span> d.workspace_id = <span class="sql-var">$2</span>;</code></pre>
+          </div>
+          <div class="query-footer"><span>Index: <b>idx_documents_workspace_slug</b></span><span>Latest lookup: <b>version DESC</b></span></div>
+        </article>
+        <aside class="scale-card">
+          <p class="section-label">Scale watch</p>
+          <h3>What breaks first at 10× data?</h3>
+          <div class="scale-highlight"><span class="scale-number">03</span><div><strong>Full-text search</strong><p>Query 3 is identified as the first likely pressure point.</p></div></div>
+          <ul>
+            <li>GIN index size competes for memory and cache.</li>
+            <li><code>ts_rank</code> becomes increasingly CPU-bound.</li>
+            <li>Workspace filtering is not partitioned inside the GIN index.</li>
+          </ul>
+          <a href="DATA_MODEL.md#4-the-query-that-breaks-first-at-10-data" target="_blank" class="text-link">View mitigation options ↗</a>
+        </aside>
+      </div>
+    </section>
 
-    <script>
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
-    </script>
+    <section class="section container" id="getting-started">
+      <div class="start-card">
+        <div>
+          <p class="section-label">05 / Get started</p>
+          <h2>Run the schema locally.</h2>
+          <p>The repository contains the SQL schema, this visual preview, and the complete data model documentation.</p>
+        </div>
+        <div class="start-code">
+          <div><span class="prompt">$</span> createdb document_model</div>
+          <div><span class="prompt">$</span> psql -d document_model -f schema.sql</div>
+          <div><span class="prompt">$</span> psql -d document_model -c "\dt"</div>
+        </div>
+        <div class="start-actions">
+          <a class="button button-primary" href="DATA_MODEL.md" target="_blank">Open full documentation ↗</a>
+          <a class="button button-ghost" href="https://github.com/techtuber9988/document-model" target="_blank" rel="noreferrer">View repository ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="brand" href="#top"><span class="brand-mark">DM</span><span>document<span class="brand-accent">-model</span></span></a>
+      <p>PostgreSQL data architecture · Built for clarity, integrity, and scale.</p>
+      <span class="mono footer-version">schema / 2026</span>
+    </div>
+  </footer>
 </body>
 </html>
+
